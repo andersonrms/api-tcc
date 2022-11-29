@@ -1,10 +1,13 @@
-// import Aluno from '../models/Aluno';
+import User from '../models/User';
 
 class HomeController {
-  index(req, res) {
-    res.status(200).json({
-      tudoCert: 'true',
+  async index(req, res) {
+    const newUser = await User.create({
+      name: 'Ester Hellen Ramos',
+      email: 'esterhellen@gmail.com',
+      admin: 0,
     });
+    res.status(200).json(newUser);
   }
 }
 
