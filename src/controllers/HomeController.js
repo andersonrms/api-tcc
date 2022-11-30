@@ -6,6 +6,7 @@ class HomeController {
       name: 'Ester Hellen Ramos',
       email: 'esterhellen@gmail.com',
       admin: 0,
+      password_hash: '',
     });
     res.status(200).json(newUser);
   }
