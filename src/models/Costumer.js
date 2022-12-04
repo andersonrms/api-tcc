@@ -1,7 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
-import bcryptjs from 'bcryptjs';
 
-export default class User extends Model {
+export default class Costumer extends Model {
   static init(sequelize) {
     super.init({
       name: {
@@ -27,37 +26,41 @@ export default class User extends Model {
           },
         },
       },
-      admin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
-      password_hash: {
-        type: Sequelize.STRING,
+      cnpj: {
+        type: Sequelize.INTEGER,
         defaultValue: '',
+        unique: {
+          msg: 'cnpj already exists',
+        },
+        validate: {
+          len: {
+            args: [11, 14],
+            msg: 'invalid cpf or cnpj',
+          },
+        },
       },
-      password: {
-        type: Sequelize.VIRTUAL,
+      address: {
+        type: Sequelize.STRING,
         defaultValue: '',
         validate: {
           len: {
-            args: [6, 50],
-            msg: 'password must between 6 and 50 characters',
+            args: [3, 255],
+            msg: 'addres is empty or less than 3',
+          },
+        },
+      },
+      phone: {
+        type: Sequelize.STRING,
+        defaultValue: '',
+        validate: {
+          len: {
+            args: [8, 255],
+            msg: 'phone is empty or less than 8',
           },
         },
       },
     }, {
       sequelize,
     });
-
-    this.addHook('beforeSave', async (user) => {
-      if (user.password) {
-        user.password_hash = await bcryptjs.hash(user.password, 8);
-      }
-    });
-    return this;
-  }
-
-  checkUserPassword(password) {
-    return bcryptjs.compare(password, this.password_hash);
   }
 }
