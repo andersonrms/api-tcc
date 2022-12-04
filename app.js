@@ -9,6 +9,7 @@ import { resolve } from 'path';
 import homeRoutes from './src/routes/homeRouter';
 import userRoutes from './src/routes/userRouter';
 import loginRoutes from './src/routes/loginRouter';
+import costumeRoutes from './src/routes/costumerRoutes';
 
 class App {
   constructor() {
@@ -27,6 +28,7 @@ class App {
     this.app.use('/', homeRoutes);
     this.app.use('/user', userRoutes);
     this.app.use('/login', loginRoutes);
+    this.app.use('/costumer', costumeRoutes);
   }
 }
 
