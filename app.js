@@ -10,6 +10,7 @@ import homeRoutes from './src/routes/homeRouter';
 import userRoutes from './src/routes/userRouter';
 import loginRoutes from './src/routes/loginRouter';
 import costumeRoutes from './src/routes/costumerRoutes';
+import productRoutes from './src/routes/productRouter';
 
 class App {
   constructor() {
@@ -29,6 +30,7 @@ class App {
     this.app.use('/user', userRoutes);
     this.app.use('/login', loginRoutes);
     this.app.use('/costumer', costumeRoutes);
+    this.app.use('/product', productRoutes);
   }
 }
 

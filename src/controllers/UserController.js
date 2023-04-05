@@ -1,6 +1,6 @@
 import User from '../models/User';
 
-class HomeController {
+class UserController {
   async create(req, res) {
     try {
       const newUser = await User.create(req.body);
@@ -12,7 +12,7 @@ class HomeController {
 
   async list(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'name', 'email', 'admin'] });
       return res.status(200).json(users);
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
@@ -22,7 +22,15 @@ class HomeController {
   async show(req, res) {
     try {
       const user = await User.findByPk(req.params.id);
-      return res.status(200).json(user);
+      if (!user) return res.status(400).json({ errors: ['user does not exists'] });
+
+      const {
+        id, name, email, admin,
+      } = user;
+
+      return res.status(200).json({
+        id, name, email, admin,
+      });
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
@@ -59,4 +67,4 @@ class HomeController {
   }
 }
 
-export default new HomeController();
+export default new UserController();
