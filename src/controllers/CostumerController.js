@@ -13,6 +13,8 @@ class CostumersController {
   async list(req, res) {
     try {
       const costumer = await Costumer.findAll();
+      console.log('USER ID:', req.userId);
+      console.log('USER EMAIL:', req.userEmail);
       return res.status(200).json(costumer);
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
