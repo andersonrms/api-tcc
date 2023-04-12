@@ -10,12 +10,16 @@ class PhotoController {
     return upload(req, res, async (error) => {
       if (error) return res.status(400).json({ erros: [error.code] });
 
-      const { originalname, filename } = req.file;
-      // const user_id = req.userId;
-      const { user_id } = req.body;
-      const newPhoto = await Photo.create({ originalname, filename, user_id });
+      try {
+        const { originalname, filename } = req.file;
+        // const user_id = req.userId;
+        const { user_id } = req.body;
+        const newPhoto = await Photo.create({ originalname, filename, user_id });
 
-      return res.json(newPhoto);
+        return res.json(newPhoto);
+      } catch (e) {
+        return res.status(400).json({ errors: ['Aluno não existe'] });
+      }
     });
   }
 
