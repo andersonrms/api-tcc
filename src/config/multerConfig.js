@@ -13,7 +13,7 @@ export default {
   },
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, resolve(__dirname, '..', '..', 'uploads')); // __dirname === current folder
+      cb(null, resolve(__dirname, '..', '..', 'uploads', 'images')); // __dirname === current folder
     },
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}_${numberRandom()}${extname(file.originalname)}`);

@@ -18,7 +18,7 @@ class UserController {
         order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
         include: {
           model: Photo,
-          attributes: ['filename'],
+          attributes: ['filename', 'url'],
         },
       });
       return res.status(200).json(users);
@@ -34,7 +34,7 @@ class UserController {
         order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
         include: {
           model: Photo,
-          attributes: ['filename'],
+          attributes: ['filename', 'url'],
         },
       });
       if (!user) return res.status(400).json({ errors: ['user does not exists'] });
