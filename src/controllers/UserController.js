@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Photo from '../models/Photo';
 
 class UserController {
   async create(req, res) {
@@ -12,7 +13,14 @@ class UserController {
 
   async list(req, res) {
     try {
-      const users = await User.findAll({ attributes: ['id', 'name', 'email', 'admin'] });
+      const users = await User.findAll({
+        attributes: ['id', 'name', 'email', 'admin'],
+        order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
+        include: {
+          model: Photo,
+          attributes: ['filename', 'url'],
+        },
+      });
       return res.status(200).json(users);
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
@@ -21,16 +29,17 @@ class UserController {
 
   async show(req, res) {
     try {
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.params.id, {
+        attributes: ['id', 'name', 'email', 'admin'],
+        order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
+        include: {
+          model: Photo,
+          attributes: ['filename', 'url'],
+        },
+      });
       if (!user) return res.status(400).json({ errors: ['user does not exists'] });
 
-      const {
-        id, name, email, admin,
-      } = user;
-
-      return res.status(200).json({
-        id, name, email, admin,
-      });
+      return res.status(200).json({ user });
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
