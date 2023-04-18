@@ -28,12 +28,12 @@ export default class Order extends Model {
         },
       },
       status: {
-        type: Sequelize.ENUM(['pending', 'production', 'ready']),
+        type: Sequelize.ENUM(['pending', 'production', 'done']),
         defaultValue: 'peding',
         validate: {
           isIn: {
-            args: [['pending', 'production', 'ready']],
-            msg: 'must be pending, production or ready',
+            args: [['pending', 'production', 'done']],
+            msg: 'status must be pending, production or done',
           },
         },
       },
@@ -43,7 +43,7 @@ export default class Order extends Model {
         validate: {
           isIn: {
             args: [['credit', 'currency', 'installment']],
-            msg: 'must be credit, currency or installment',
+            msg: 'payment form must be credit, currency or installment',
           },
         },
       },
@@ -52,5 +52,11 @@ export default class Order extends Model {
       tableName: 'orders',
     });
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'user_id' });
+    this.belongsTo(models.Product, { foreignKey: 'product_id' });
+    this.belongsTo(models.Costumer, { foreignKey: 'costumer_id' });
   }
 }
