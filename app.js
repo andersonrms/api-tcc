@@ -5,6 +5,7 @@ dotenv.config();
 import './src/database';
 
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { resolve } from 'path';
 import homeRoutes from './src/routes/homeRouter';
@@ -25,7 +26,9 @@ class App {
   middlewares() {
     this.app.use(cors({
       origin: 'http://localhost:3000',
+      credentials: true,
     }));
+    this.app.use(cookieParser());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(express.static(resolve(__dirname, 'uploads'))); // use to open photo on browser
