@@ -25,13 +25,12 @@ class TokenController {
     );
 
     const options = {
-      domain: '.localhost',
-      path: '/',
       expires: new Date(Date.now() + 900000),
       secure: true,
+      httpOnly: true,
     };
 
-    res.cookie('jwt', token, options);
+    res.cookie('user_token', token, options);
 
     return res.json({ token });
   }

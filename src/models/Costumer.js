@@ -28,14 +28,17 @@ export default class Costumer extends Model {
       },
       cnpj: {
         type: Sequelize.INTEGER,
-        defaultValue: '',
+        defaultValue: null,
         unique: {
           msg: 'cnpj already exists',
         },
         validate: {
           len: {
-            args: [11, 14],
-            msg: 'invalid cpf or cnpj',
+            args: [14],
+            msg: 'invalid cnpj',
+          },
+          isNumeric: {
+            msg: 'cnpj does not a number',
           },
         },
       },
@@ -56,6 +59,22 @@ export default class Costumer extends Model {
           len: {
             args: [8, 255],
             msg: 'phone is empty or less than 8',
+          },
+        },
+      },
+      cpf: {
+        type: Sequelize.INTEGER,
+        defaultValue: null,
+        unique: {
+          msg: 'cpf already exists',
+        },
+        validate: {
+          len: {
+            args: [11],
+            msg: 'invalid cpf',
+          },
+          isNumeric: {
+            msg: 'cpf does not a number',
           },
         },
       },
